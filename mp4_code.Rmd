@@ -38,6 +38,8 @@ FROM movie_info
 LIMIT 0, 5;
 ```
 
+
+
 ```{sql, connection = db}
 SELECT t.title AS Movie_Title, t.production_year AS Year
 FROM title t
