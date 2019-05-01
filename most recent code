@@ -1,0 +1,101 @@
+---
+title: Avengers:Endgame, Worth the Hype?
+subtitle: A brief overview of the budget and box office performance of the origin movies leading up to one of the most anticipated movie of 2019.
+author: Lauren Forando, Sarah Daum, Lydia Ivanovic
+output:
+ html_document:
+   code_folding: hide
+   fig_width: 8
+   fig_caption: true
+   theme: cosmo
+   df_print: paged
+---
+`r format(Sys.time(), "%a %b %d %X %Y")`
+
+![](https://media.giphy.com/media/WbNqQbrnAGr5e/giphy.gif)
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(devtools)
+library(RMySQL)
+library(vembedr)
+library(sqldf)
+library(dbplyr)
+db <- dbConnect(MySQL(), 
+                host = "scidb.smith.edu", 
+                user = "mth292", 
+                password = "RememberPi", 
+                dbname = "imdb")
+knitr::opts_chunk$set(connection = db, max.print = 20)
+```
+
+```{sql, connection=db}
+SELECT *
+FROM title t
+LIMIT 0, 5;
+```
+
+
+```{sql, connection=db}
+#Movies behind the Avengers Franchise organized through overall gross (USA).
+
+SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS gross_USA
+FROM title t
+JOIN movie_info m ON m.movie_id = t.id
+LEFT JOIN info_type i ON i.info = m.info_type_id
+WHERE title IN ("Iron Man", "Iron Man 2", "The Incredible Hulk", "Thor", "Captain America: The First Avenger", "The Avengers", "Iron Man 3","Thor: The Dark World","Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man", "Captain America: Civil War", "Doctor Strange")
+AND kind_id = 1
+AND info_type_id = 107
+AND production_year > 2000
+GROUP BY movie_id
+ORDER BY gross_USA DESC;
+```
+
+![Marvel Studios’ Avengers: Endgame](https://i.kinja-img.com/gawker-media/image/upload/s--3ClQMwPu--/c_fill,fl_progressive,g_center,h_900,q_80,w_1600/lnuyy61l5oz6x2x3odrg.jpg)(https://youtu.be/sOgwPtVWMhE “Marvel Studios’ Avengers: Endgame - Click to Watch!“)
+YouTubeMarvelMoviesOnDemand
+Marvel Studios' Avengers: Endgame - Trailer
+
+###Movies behind the Avengers Franchise organized through overall budget.
+```{sql, connection=db}
+SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS Production_Cost
+FROM title t
+JOIN movie_info m ON m.movie_id = t.id
+LEFT JOIN info_type i ON i.info = m.info_type_id
+WHERE title IN ("Iron Man", "Iron Man 2", "The Incredible Hulk", "Thor", "Captain America: The First Avenger", "The Avengers", "Iron Man 3","Thor: The Dark World","Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man", "Captain America: Civil War", "Doctor Strange")
+AND kind_id = 1
+AND info_type_id = 105
+AND production_year > 2000
+GROUP BY movie_id
+ORDER BY Production_Cost DESC;
+```
+
+```{r}
+library(stringr)
+split_gross_data <- str_split_fixed(gross_earnings_ranked$gross_USA, "(USA)", 2)
+view(split_gross_data)
+```
+
+
+```{r}
+gross_earnings_ranked %>%
+  separate(gross_USA,c("gross_numeric", NA), sep = "(USA)")
+gross_earnings_ranked
+```
+
+
+
+```{r}
+library(ggplot2)
+comparison_data <- gross_earnings_ranked %>%
+  full_join(overall_budget_ranked, by = "Movie_Title")
+ggplot(comparison_data, aes(y = gross_USA, x = Movie_Title)) +
+  geom_bar(stat = "identity") + 
+  ylab("Gross Earnings") +
+  ggtitle("Movies behind the Avengers Franchise Ranked By Budget")
+compari
+```
+
+
+![](https://media.giphy.com/media/Ajyi28ZdneUz6/giphy.gif
+https://media.giphy.com/media/Ajyi28ZdneUz6/giphy.gif
+)
