@@ -37,6 +37,8 @@ LIMIT 0, 5;")
 ```
 
 ```{r}
+#Here we are selecting and filtering out information about the available origin movies leading up to the new Avengers movie using the imdb query that is in SQL.
+
 gross_table <-db %>%
   dbGetQuery("SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS gross
 FROM title t
@@ -55,7 +57,8 @@ ORDER BY gross DESC;") %>%
 
 
 ```{r, include = FALSE}
-#Movies behind the Avengers Franchise organized through overall gross (USA).
+#Here we created a table regarding the movies behind the Avengers Franchise organized through overall gross #(USA). The table was used by selecting certain variables and joining multiple tables within the imdb query #together. We then organized the table by grouping by the movie_id and ordering by the amount that the movie #made - in descending order so that the top earning movie is first in the table.
+
 gross_data <-db %>%
   dbGetQuery("SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS gross
 FROM title t
@@ -78,9 +81,9 @@ ORDER BY gross DESC;") %>%
  [![Marvel Studios' Avengers: Endgame](https://i.kinja-img.com/gawker-media/image/upload/s--3ClQMwPu--/c_fill,fl_progressive,g_center,h_900,q_80,w_1600/lnuyy61l5oz6x2x3odrg.jpg)](https://youtu.be/sOgwPtVWMhE "Marvel Studios' Avengers: Endgame - Click to Watch!")
 Marvel Studios' Avengers: Endgame - Trailer
 
-###Movies behind the Avengers Franchise organized by overall budget.
+
 ```{sql, connection = db}
-#movies behind the avengers franchise organized by overall budget
+#Here we created a table regarding th movies behind the avengers franchise grouped by movie_id and organized #by the overall budget cost - once again in descending order so that the movie with the highest production #budget is first on the list.
 
 SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS Production_Cost
 FROM title t
@@ -96,6 +99,8 @@ ORDER BY Production_Cost DESC;
 
 
 ```{r, include = FALSE}
+#Here we cleaned up one of the SQL tables by removing unnessecarry and distracting characters.
+
 Production_data <- db %>%
   dbGetQuery("SELECT t.title AS Movie_Title, t.production_year AS Year, m.info AS Production_Cost
 FROM title t
@@ -131,7 +136,8 @@ comparison_data_tidy
 ```
 
 ```{r, message = FALSE, warning=FALSE}
-#Money Plot
+#Here we created a data graphic saved as 'Mmoney_plot' which shows the overall gross, production cst, and revenue each of the available origin movies made. Additionally, we inlcuded a purple dot which represents how much money the film made the opening weekend in the United States. 
+
 money_plot <- ggplot(comparison_data_tidy, aes(y = amount, x = factor(Movie_Title, levels = c('Iron Man', 'The Incredible Hulk', 'Iron Man 2', 'Thor', 'The Avengers', 'Guardians of the Galaxy', 'Ant-Man', 'Captain America: Civil War', 'Doctor Strange')), fill = money_type)) +
   geom_bar(stat = "identity", position = "dodge") + 
   coord_flip() +
@@ -153,7 +159,7 @@ money_plot <- ggplot(comparison_data_tidy, aes(y = amount, x = factor(Movie_Titl
 money_plot
 ```
 
- Opening night box office statistics.^[https://www.ign.com/articles/2019/04/30/how-much-each-marvel-cinematic-universe-movie-made-its-opening-weekend]
+ Opening weekend box office statistics.^[https://www.ign.com/articles/2019/04/30/how-much-each-marvel-cinematic-universe-movie-made-its-opening-weekend]
 
 ```{r}
 # production_plot <- ggplot(comparison_data2, aes(y = Production_Cost, x = factor(Movie_Title, levels = c('Iron Man', 'The Incredible Hulk', 'Iron Man 2', 'Thor', 'The Avengers', 'Guardians of the Galaxy', 'Ant-Man', 'Captain America: Civil War', 'Doctor Strange')))) +
