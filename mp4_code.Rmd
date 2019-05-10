@@ -1,6 +1,6 @@
 ---
-title: Avengers:Endgame, Worth the Hype?
-subtitle: A brief overview of the budget and box office performance of the origin movies leading up to one of the most anticipated movie of 2019.
+title: _Avengers Endgame_— Worth the Hype?
+subtitle: How emotional origin stories in the Marvel Cinematic Universe led up to the most anticipated movie of 2019.
 author: Lauren Forando, Sarah Daum, Lydia Ivanovic
 output:
  html_document:
@@ -12,7 +12,40 @@ output:
 ---
 `r format(Sys.time(), "%a %b %d %X %Y")`
 
+**GitHub repository link**^[git@github.com:lforando/mini-project4.git]
+
+
+
+![](https://www.yourmomhatesthis.com/images/2018/01/Avengers-Team.png)
+
+
+
+The other day I walked into the UMass DuBois Library and the first thing I saw was a flyer printed with the follow statement:
+
+`“Thank you for helping us keep the UMass Amherst Libraries an “Avengers” spoiler-free zone.”`
+
+
+The flyer took me by surprise.The library has 26 floors. With hundreds, if not thousands of visitors everyday. 
+
+
+*What kind of “Avengers” social contract are we operating on?* 
+
+
+
  ![](https://media.giphy.com/media/WbNqQbrnAGr5e/giphy.gif)
+ 
+
+
+
+The Marvel Cinematic Universe (MCU) franchise has catapulted into the spotlight over the past eleven years. Their latest release, *Avengers: Endgame* [already broke the world record](https://variety.com/2019/film/news/box-office-avengers-endgame-worldwide-1203199601) for the highest grossing movie in debut-weekend showing history, estimated at more than $2 billion worldwide as of today, May 9th 2019. This officially makes the MCU the [highest grossing franchise](https://www.boxofficemojo.com/franchises/?view=Franchise&sort=sumgross&order=DESC&p=.htm "Most Popular Franchises") in the world, surpassing previous record holders including Star Wars, Harry Potter, and the DC Universe.
+
+![**Table: A list of the highest-grossing franchises of all time, and the #1 grossing picture in that franchise so far.**](franchises.png) ^[From Box Office Mojo, a partner site of IMDb.]
+
+![**Loki has some feelings about this.**](http://media.tumblr.com/tumblr_m290zm437s1qafrh6.gif
+)
+
+
+
 
 ```{r setup, include=FALSE}
 library(tidyverse)
@@ -28,6 +61,23 @@ db <- dbConnect(MySQL(),
                 dbname = "imdb")
 knitr::opts_chunk$set(connection = db, max.print = 20)
 ```
+The Avengers/MCU has brought Marvel Studios its striking amount of success by developing intertwined plots and dedicating entire sub-series to single members of the Avengers team-- Thor, for example, has 3 movies of his own backstory, with more to come. Other popular franchises such as *Star Wars*, *Lord of the Rings*, and *Pirates of the Caribbean* do not have entire separate movies dedicated to Princess Leia, Frodo, or Jack Sparrow. *MCU* series such as the Avengers differ in this matter because they develop full and extensive backstories for their starring heroes. 
+
+ ![](https://media.giphy.com/media/Ajyi28ZdneUz6/giphy.gif)
+
+
+[*This  article from the Smithsonian website*](https://www.smithsonianmag.com/arts-culture/the-psychology-behind-superhero-origin-stories-4015776/) further supports our argument-- it discusses the psychology of origin stories, and why they are so important in ensuring huge box office successes of superhero-team movies. According to psychologist Robin Rosenberg, origin stories are the primary avenue in which viewers connect to superheroes on a personal level, and thus develop an interest in every film they feature in next. In every backstory, factors like trauma, chance, coping with adversity, romance, and family make the traditionally fearless superhero seem more human and deserving of emotional (and economic) investment. Two good examples are the untimely deaths of [*Uncle Ben in Spiderman*](https://en.wikipedia.org/wiki/Spider-Man_in_film) and the [*parents of Batman*](https://en.wikipedia.org/wiki/Batman). One has to be pretty heartless not to feel Spiderman’s emotional turmoil when his Uncle Ben is murdered.
+
+![**Oh, the feels.**](https://ewedit.files.wordpress.com/2015/01/uncle-ben.jpg)
+
+
+
+Some would disagree that superhero stories have depth and complexity. Film scholars are especially skeptical of the huge successes of superhero films because of their perceived superficiality. One such critic is Scott Bukatman, author of the essay “Why I hate Superhero Movies.” [^1] Bukatman is a Professor of Film and Media Studies at Stanford University who researches films and comics **(A.K.A. the nerdiest area of research imaginable.)** In “Why I Hate Superheroes he writes, “[superhero movies] are merely a thrill ride; the emphasis is not on a moral journey presented in physical terms.” Although he might disapprove of our love for superhero movies, even Bukatman can recognize the cruciality of origin stories. He writes, "The origin story is the real site of plasmatic possibility, and it is the most intriguing part of these films. The characters, and perhaps the audience, do not yet know how the bite of a radioactive spider, gamma rays, particle accelerator, or mutant gene will manifest within...their bodies." Death, trauma, and loss definitely appeal to our empathic side. Without them, superhero movies would seem lifeless despite their CGI, colors, and action. We need something to connect to on a deeper humanistic level.
+
+![**The mask has to come off sometimes.**](https://i.pinimg.com/originals/a6/80/22/a680226e0416d012ca1144c120b11bf6.gif)
+ 
+ 
+So for Mini Project 4 we measured MCU fans emotional investment by looking at a very unemotional factor: the overall economic performances of the franchise (what else?). Below are several tables, images, and graphics that show the unprecedented popularity of the Marvel Comic Universe. We chose to look at the popularity of individual origin stories over time, as well as several of the Avengers team movies. Through this comparative lens, we aim to reveal which origin stories did the best job of making the protagonist lovable, if at least relatable in some fashion. We decided to use gross as a metric instead of rating because we felt that it was a more concrete measurement of popularity. 
 
 ```{r, include=FALSE}
 db %>%
@@ -78,9 +128,10 @@ ORDER BY gross DESC;") %>%
  gross_data
 ```
 
- [![Marvel Studios' Avengers: Endgame](https://i.kinja-img.com/gawker-media/image/upload/s--3ClQMwPu--/c_fill,fl_progressive,g_center,h_900,q_80,w_1600/lnuyy61l5oz6x2x3odrg.jpg)](https://youtu.be/sOgwPtVWMhE "Marvel Studios' Avengers: Endgame - Click to Watch!")
-Marvel Studios' Avengers: Endgame - Trailer
 
+
+When talking about high grossing franchises like *Avengers*, we can't ignore the budget and production costs. Below we have a graphic of all of these important factors: *gross*, *production_cost*, and *revenue*. 
+The purple dots represent the gross from each film's opening weekend.
 
 ```{sql, connection = db}
 #Here we created a table regarding th movies behind the avengers franchise grouped by movie_id and organized #by the overall budget cost - once again in descending order so that the movie with the highest production #budget is first on the list.
@@ -161,6 +212,10 @@ money_plot
 
  Opening weekend box office statistics.^[https://www.ign.com/articles/2019/04/30/how-much-each-marvel-cinematic-universe-movie-made-its-opening-weekend]
 
+Unfortunately, the IMDb data in SQL ends in 2016, so we could not visually compare the more recent Marvel films in our data graphic. And while 3 years may not seem like that much time in the film world, several world records have been broken in this span of time (*Endgame, Black Panther, Captain Marvel, Avengers: Infinity War*). We had to look directly at the IMDb website, and their partner site Box Office Mojo with stats focusing more on gross than user rating. Luckily, the IMDb website has data on the latest films. 
+Let’s see how it compares:
+![Top MCU movies by gross, including movies from 2016-present](mcu_movies.png)
+*Iron Man 3*, The first two *Avengers* movies, *Guardians of the Galaxy*, and *Captain America: Civil War* remain at the top of the list of high-grossing movies, but *Black Panther, Infinity War, Endgame, Captain Marvel, and Spider-Man: Homecoming* have all dominated in the mere span of 3 years.
 ```{r}
 # production_plot <- ggplot(comparison_data2, aes(y = Production_Cost, x = factor(Movie_Title, levels = c('Iron Man', 'The Incredible Hulk', 'Iron Man 2', 'Thor', 'The Avengers', 'Guardians of the Galaxy', 'Ant-Man', 'Captain America: Civil War', 'Doctor Strange')))) +
 #   geom_bar(stat = "identity") + 
@@ -179,6 +234,18 @@ money_plot
 # production_plot
 ```
 
- ![](https://media.giphy.com/media/Ajyi28ZdneUz6/giphy.gif)
+**Conclusion**
 
- Want to see the data for yourself? Check out the link to our GitHub repository!^[git@github.com:lforando/mini-project4.git]
+As humans, we are drawn to things that are predictable and familiar as much as we are attracted to the action, CGI, and the justice that are found in these movies. Comic book and screenwriters have tapped into the importance of making superheroes relatable in order to draw out the audience’s feelings of empathy and emotional allegiance. These feelings of empathy are what give people a personal connection to each superhero, and bring them back to the theater year after year. Almost every superhero in the Avengers team has their own movie that explains how they went from being an average Joe to saving the planet from utter destruction. As thrilling as it is to watch these larger-than-life heroes with unbelievable powers fight equally larger-than-life supervillains, moviegoers also want to believe that these superheroes came from humble mortal beginnings, just like us.
+ 
+
+
+**Lastly, don't forget to watch *Endgame*!!!!! Here's a quick link to the trailer. We'll see you there!**
+ 
+ [![Marvel Studios' Avengers: Endgame](https://i.kinja-img.com/gawker-media/image/upload/s--3ClQMwPu--/c_fill,fl_progressive,g_center,h_900,q_80,w_1600/lnuyy61l5oz6x2x3odrg.jpg)](https://youtu.be/sOgwPtVWMhE "Marvel Studios' Avengers: Endgame - Click to Watch!")
+Marvel Studios' Avengers: Endgame - Trailer
+
+
+
+ 
+ [^1]: Bukatman, S. (2011). Why I hate superhero movies. Cinema Journal, 50(3), 118-122.
